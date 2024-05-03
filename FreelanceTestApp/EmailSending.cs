@@ -1,15 +1,10 @@
 ﻿using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FreelanceTestApp
 {
     public class EmailSending
     {
-        public async Task Send(string senderName, string senderEmail, string recipientName, string recipientEmail, string text)
+        public async Task<RestResponse> Send(string senderName, string senderEmail, string recipientName, string recipientEmail, string text)
         {           
             var client = new RestClient("https://send.api.mailtrap.io/api");
 
@@ -29,6 +24,8 @@ namespace FreelanceTestApp
             RestResponse response = await client.ExecuteAsync(request);
 
             Console.WriteLine(response.Content);
+
+            return response;
         }
     }
 }
