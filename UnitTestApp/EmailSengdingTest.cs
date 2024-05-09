@@ -1,4 +1,4 @@
-using FreelanceTestApp;
+using FreelanceTestApp.Classes;
 using System.Net;
 
 namespace UnitTestApp
@@ -9,11 +9,20 @@ namespace UnitTestApp
         public async Task Send_FromCertainEmail_AnyText_To_ReceiverEmail_ShouldReturnOkResult()
         {
             //Arrange
-            var emailSender = new EmailSending();
-            
-            var response = await emailSender.Send("Mailtrap", "mailtrap@demomailtrap.com",
-                                                  "Receiver", "rashid.aliyev96@gmail.com",
-                                                  "Hello to my freelance test app !");
+            var options = new EmailOptions();
+
+            var emailSender = new EmailSender(new MyRestClient(options.BaseAdress ?? ""), new MyRestResponse(), options);
+
+            var request = new MyRestRequest("/send", RestSharp.Method.Post);
+
+            request.SenderName = "Mailtrap";
+            request.SenderMail = "mailtrap@demomailtrap.com";
+            request.RecipientName = "Receiver";
+            request.RecipientMail = "rashid.aliyev96@gmail.com";
+            request.Subject = "Awesome";
+            request.Text = "Hi there ! I'm testing my Rest Email !";
+
+            var response = await emailSender.Send(request);
 
             //Act
             var result = response.StatusCode;

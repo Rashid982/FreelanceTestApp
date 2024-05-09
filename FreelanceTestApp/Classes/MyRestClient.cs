@@ -1,15 +1,15 @@
-﻿using RestSharp;
+﻿using FreelanceTestApp.Interfaces;
+using RestSharp;
 
-namespace FreelanceTestApp
+namespace FreelanceTestApp.Classes
 {
-    public class MyRestClient : IRequestClient
+    public class MyRestClient : IClient
     {
         private readonly RestClient restClient;
-        
+
         public MyRestClient(string baseUrl)
-        {     
-            restClient = new RestClient(baseUrl);      
-            
+        {
+            restClient = new RestClient(baseUrl);
         }
 
         public void AddDefaultHeader(string name, string value)
@@ -29,5 +29,6 @@ namespace FreelanceTestApp
 
             return null;
         }
+
     }
 }
