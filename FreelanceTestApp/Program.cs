@@ -1,4 +1,5 @@
 ﻿using FreelanceTestApp.Classes;
+using FreelanceTestApp.Validation;
 
 
 var options = new EmailOptions();
@@ -14,4 +15,14 @@ request.RecipientMail = "rashid.aliyev96@gmail.com";
 request.Subject = "Awesome";
 request.Text = "Hi there ! I'm testing my Rest Email !";
 
-await emailSender.Send(request);
+RequestValidator validator = new RequestValidator();
+var validationResult = validator.Validate(request);
+
+if(validationResult.IsValid)
+{
+    await emailSender.Send(request);
+}
+else
+{
+    Console.WriteLine(validationResult.ToString("~"));
+}

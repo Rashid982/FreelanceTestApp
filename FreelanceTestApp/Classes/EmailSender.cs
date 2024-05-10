@@ -6,6 +6,7 @@ namespace FreelanceTestApp.Classes
     {
         private readonly IClient client;        
         private readonly IResponse response;
+        
 
         public EmailSender(IClient client, IResponse response, IOptions options)
         {            
