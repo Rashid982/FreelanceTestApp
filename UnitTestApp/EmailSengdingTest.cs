@@ -11,25 +11,28 @@ namespace UnitTestApp
             //Arrange
             var options = new EmailOptions();
 
-            var emailSender = new EmailSender(new MyRestClient(options.BaseAdress ?? ""), new MyRestResponse(), options);
+            var client = new MailTrapClient(options);
 
-            var request = new MyRestRequest("/send", RestSharp.Method.Post);
+            var emailSender = new EmailSender(client);
 
-            request.SenderName = "Mailtrap";
-            request.SenderMail = "mailtrap@demomailtrap.com";
-            request.RecipientName = "Receiver";
-            request.RecipientMail = "rashid.aliyev96@gmail.com";
-            request.Subject = "Awesome";
-            request.Text = "Hi there ! I'm testing my Rest Email !";
+            var request = new MessageRequest()
+            {
+                SenderName = "Mailtrap",
+                SenderMail = "mailtrap@demomailtrap.com",
+                RecipientName = "Receiver",
+                RecipientMail = "rashid.aliyev96@gmail.com",
+                Subject = "Awesome",
+                Text = "Hi there ! I'm testing my Rest Email !"
+            };
 
-            var response = await emailSender.Send(request);
+            var response = await emailSender.SendEmail(request);
 
             //Act
             var result = response.StatusCode;
 
 
             //Assert
-            Assert.Equal(HttpStatusCode.OK, result);
+            Assert.Equal(HttpStatusCode.OK, (HttpStatusCode)result);
         }
     }
 }

@@ -1,11 +1,8 @@
-﻿using System.Net;
-
-namespace FreelanceTestApp.Interfaces
+﻿namespace FreelanceTestApp.Interfaces
 {
     public interface IResponse
     {
-        public HttpStatusCode StatusCode { get; set; }
-        public object Content { get; set; }
-        string SerializeContent();
+        int StatusCode { get; set; }
+        string Content { get; set; }
     }
 }
